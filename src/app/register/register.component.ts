@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-register',
@@ -19,20 +20,18 @@ export class RegisterComponent implements OnInit {
 
   error = '';
 
-  url = "http://localhost:3333/api/user";
-
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-  constructor(private http: HttpClient,) { }
+  constructor(private http: HttpClient, private userService: UserService) { }
 
   ngOnInit(): void {
-    const url = `${this.url}`;
-    this.http.post<any>(url, {email: "caonhungoc@gmail.com", name: "ngoc", password: "123"}, this.httpOptions).pipe(
-      tap(_ => this.log(`added`)),
-      catchError(this.handleError<any>('addUser'))
-    );
+    // const url = `${this.url}`;
+    // this.http.get<any>(url, this.httpOptions).pipe(
+    //   tap(data => {this.log(`added + ${data}`); this.error = data}),
+    //   catchError(this.handleError<any>('addUser'))
+    // );
   }
 
   register(userInfor: any) {
@@ -41,11 +40,14 @@ export class RegisterComponent implements OnInit {
       return;
     }
     this.error = '';
-    const url = `${this.url}`;
-    return this.http.post<any>(url, userInfor, this.httpOptions).pipe(
-      tap(_ => this.log(`added`)),
-      catchError(this.handleError<any>('addUser'))
-    );
+    this.userService.createUSer(userInfor)
+    .then(data => {
+
+      this.error = data.toString();
+    })
+    .catch(e => {
+      this.error = e;
+    })
   }
 
   private log(message: string) {
