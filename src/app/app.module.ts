@@ -9,13 +9,17 @@ import { RegisterComponent } from './register/register.component';
 import { UserComponent } from './user/user.component';
 
 import { HttpClientModule } from '@angular/common/http';
+import { LoginComponent } from './login/login.component';
+import { TodosComponent } from './todos/todos.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     RegisterComponent,
-    UserComponent
+    UserComponent,
+    LoginComponent,
+    TodosComponent
   ],
   imports: [
     BrowserModule,

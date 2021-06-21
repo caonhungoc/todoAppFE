@@ -1,0 +1,40 @@
+<p>todos works!</p>
+
+<input type="text" name="title" [(ngModel)]="title" placeholder="title">
+
+<input type="text" [(ngModel)]="description" placeholder="description">
+<button (click)="createTask()">Create task</button>
+<!-- <ul *ngIf="tasks">
+    <li *ngFor="let task of tasks">
+        <span>Title : {{ task.title }}</span>
+        <span>Description : {{ task.description }}</span>
+    </li>
+</ul> -->
+
+<div *ngIf="tasks[0]">
+    <div *ngFor="let task of tasks; let i = index">
+        <div *ngIf="task.statusID === 2">
+          <textarea  style="text-decoration-line: line-through;" [(ngModel)]="tasks[i].title"> {{ task.title }}</textarea>
+          <textarea [(ngModel)]="tasks[i].title"> {{ task.title }}</textarea>
+          <textarea [(ngModel)]="tasks[i].description"> {{ task.description }}</textarea>
+          <button (click)="editTask(task)">edit</button>
+          <button (click)="deleteTask(task.id)">delete</button>
+          <button  (click)="reopenTask(task.id)">re-open</button>
+        </div>
+        <div *ngIf="task.statusID !== 2">
+          <textarea [(ngModel)]="tasks[i].title"> {{ task.title }}</textarea>
+          <textarea [(ngModel)]="tasks[i].title"> {{ task.title }}</textarea>
+          <textarea [(ngModel)]="tasks[i].description"> {{ task.description }}</textarea>
+          <button (click)="editTask(task)">edit</button>
+          <button (click)="deleteTask(task.id)">delete</button>
+          <button  (click)="closeTask(task.id)">close</button>
+        </div>
+     
+    </div>
+</div>
+
+<div *ngIf="!tasks[0]">
+    <h1>task empty</h1>
+</div>
+
+

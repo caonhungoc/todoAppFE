@@ -4,53 +4,46 @@ import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { UserService } from '../services/user.service';
+import { Router } from '@angular/router';
 
-// import { User } from './../user';
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
 })
-export class RegisterComponent implements OnInit {
+export class LoginComponent implements OnInit {
+
   userInfor = {    
     name : '',
     email : '',
     password : '',
     rePassword : '',
   }
-
+  // token = '';
   error = '';
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
-
-  constructor(private http: HttpClient, private userService: UserService) { }
+  constructor(private http: HttpClient, private userService: UserService, private router: Router) { }
 
   ngOnInit(): void {
-    // const url = `${this.url}`;
-    // this.http.get<any>(url, this.httpOptions).pipe(
-    //   tap(data => {this.log(`added + ${data}`); this.error = data}),
-    //   catchError(this.handleError<any>('addUser'))
-    // );
   }
 
-  register(userInfor: any) {
-    if (userInfor.password !== userInfor.rePassword) {
-      this.error = "password should be the same";
-      return;
-    }
-    this.error = '';
-    this.userService.createUSer(userInfor)
+  login(userInfor: any) {
+    this.userService.login(userInfor)
     .then(data => {
-      // this.data.email;
-      // this.error = data.toString();
-      let jsonRes = JSON.parse(JSON.stringify(data))
-      // this.error = JSON.stringify(jsonRes.email);
-      this.error = jsonRes.email;
+      let jsonRes = JSON.parse(JSON.stringify(data));
+      // console.log("raw data = " + jsonRes);
+      // this.token = jsonRes.token;
+      this.userService.token = jsonRes.token;
+      localStorage.setItem('access_token', jsonRes.token);
+      this.router.navigate(['todos']);
+      // console.log("token = " + this.token + ", message = " + jsonRes.message);
     })
     .catch(e => {
+      console.log("error=" +JSON.stringify(e))
       this.error = e;
     })
   }
