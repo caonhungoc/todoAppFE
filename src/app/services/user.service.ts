@@ -12,10 +12,9 @@ import { User } from './../user';
 })
 export class UserService {
 
-  private Url = 'http://localhost:3333/api/user';  // URL to web api
-  private UrlLogin = 'http://localhost:3333/api/login';  // URL to web api
-  private UrlTask = 'http://localhost:3333/api/task';  // URL to web api
-
+  private Url = 'http://localhost:3333/api/user';
+  private UrlLogin = 'http://localhost:3333/api/login';
+  private UrlTask = 'http://localhost:3333/api/task';
 
   token: String = '';
 
@@ -27,6 +26,10 @@ export class UserService {
 
   public createUSer(user: any): Promise<any> {
     return this.http.post(this.Url, user).pipe().toPromise();
+  }
+
+  public getUsers(): Promise<any> {
+    return this.http.get(this.Url, this.httpOptions).toPromise();
   }
 
   public login(user: any): Promise<any> {
@@ -58,6 +61,11 @@ export class UserService {
   public reopenTask(taskId: any) {
     let reopenUrl = `${this.UrlTask}/reopen/${taskId}`;
     return this.http.put(reopenUrl, {}, this.httpOptions).toPromise();
+  }
+
+  public getTaskByType(type: number) {
+    let Url = `${this.UrlTask}/${type}`;
+    return this.http.get(Url, this.httpOptions).toPromise();
   }
 
   constructor(private http: HttpClient) { }

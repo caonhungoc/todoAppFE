@@ -1,1 +1,29 @@
-<p>user works!</p>
+<h1>User list</h1>
+<button (click)="getAllUser()">get all Users</button>
+<label for="cars">Choose a task type:</label>
+
+<select (change)="getTaskByType()" [(ngModel)]="selectedOption">
+  <option value="1" selected>opened task</option>
+  <option value="2">closed task</option>
+  <option value="3">re-open task</option>
+  <option value="4">removed task</option>
+</select>
+
+<ul *ngIf="users[0]">
+    <li *ngFor="let user of users">
+        <span> id : {{ user.id }}</span>
+        <span> | user name : {{ user.name }}</span>
+        <span> | email : {{ user.email }}</span>
+    </li>
+</ul>
+
+<ul *ngIf="tasks[0]">
+    <li *ngFor="let task of tasks">
+        <span> id : {{ task.id }}</span>
+        <span> | title : {{ task.title }}</span>
+        <span> | description : {{ task.description }}</span>
+        <span> | user id : {{ task.userID }}</span>
+    </li>
+</ul>
+
+
