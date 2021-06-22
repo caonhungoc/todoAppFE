@@ -13,6 +13,8 @@ export class TodosComponent implements OnInit {
   title = '';
   description=  '';
 
+  name: any ='';
+
   public OPEN_STATUS = 1;
   public CLOSE_STATUS = 2;
   public RE_OPEN_STATUS = 3;
@@ -21,6 +23,7 @@ export class TodosComponent implements OnInit {
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {
+    this.name = localStorage.getItem('userName');
     this.getAlltask();
   }
 

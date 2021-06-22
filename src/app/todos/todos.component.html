@@ -1,4 +1,4 @@
-<p>todos works!</p>
+<p *ngIf="name">Hi {{ name }}</p>
 
 <input type="text" name="title" [(ngModel)]="title" placeholder="title">
 
@@ -10,6 +10,7 @@
         <span>Description : {{ task.description }}</span>
     </li>
 </ul> -->
+
 
 <div *ngIf="tasks[0]">
     <div *ngFor="let task of tasks; let i = index">

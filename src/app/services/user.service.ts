@@ -12,6 +12,7 @@ import { User } from './../user';
 })
 export class UserService {
 
+  userName: any = '';
   private Url = 'http://localhost:3333/api/user';
   private UrlLogin = 'http://localhost:3333/api/login';
   private UrlTask = 'http://localhost:3333/api/task';
