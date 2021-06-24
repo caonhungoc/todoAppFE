@@ -4,6 +4,8 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
+import { Router } from '@angular/router';
+
 
 import { User } from './../user';
 
@@ -19,10 +21,12 @@ export class UserService {
 
   token: String = '';
 
-  httpOptions = {
+  httpOptions: any = 
+  {
     headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': `${localStorage.getItem('access_token')}` }),
     // headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': `${this.token}` }),
-    // withCredentials: true
+    // headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+    withCredentials: true
   };
 
   public createUSer(user: any): Promise<any> {
@@ -34,7 +38,10 @@ export class UserService {
   }
 
   public login(user: any): Promise<any> {
-    return this.http.post(this.UrlLogin, user, this.httpOptions).pipe().toPromise();
+    return this.http.post(this.UrlLogin, user, {headers: new HttpHeaders({ 
+      'Content-Type': 'application/json' }),
+      withCredentials: true
+    }).pipe().toPromise();
   }
 
   public getAllTask() {
@@ -69,5 +76,5 @@ export class UserService {
     return this.http.get(Url, this.httpOptions).toPromise();
   }
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 }
