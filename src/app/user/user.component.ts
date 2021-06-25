@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
+import { Router } from '@angular/router';
 
 import { User } from '../user';
 import { Task } from "../task";
@@ -14,7 +15,11 @@ export class UserComponent implements OnInit {
   tasks: Task[] = [];
   selectedOption: any = '';
   
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private router: Router) { 
+    if(!this.userService.isLogin) {
+      this.router.navigate(['login']);
+    }
+  }
 
   getAllUser() {
     this.userService.getUsers()
@@ -37,13 +42,18 @@ export class UserComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userService.getUsers()
-    .then(users => {
-      this.users = users;
-    })
-    .catch(e => {
-      console.log("error = " + JSON.stringify(e));
-    })
+    if(this.userService.isLogin) {
+      this.userService.getUsers()
+      .then(users => {
+        this.users = users;
+      })
+      .catch(e => {
+        console.log("error = " + JSON.stringify(e));
+      })
+    }
+    else {
+      this.router.navigate(['login']);
+    }
   }
 
 }

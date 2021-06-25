@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
 
 @Component({
@@ -20,11 +21,16 @@ export class TodosComponent implements OnInit {
   public RE_OPEN_STATUS = 3;
   public REMOVED_STATUS = 4;
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit(): void {
-    this.name = localStorage.getItem('userName');
-    this.getAlltask();
+    
+    if(!this.userService.isLogin) {
+      this.router.navigate(['login']);
+    } else { 
+      this.name = localStorage.getItem('userName');
+      this.getAlltask();
+    }
   }
 
   getAlltask() {
@@ -50,6 +56,11 @@ export class TodosComponent implements OnInit {
         console.log("error = " + e);
       })
     }
+  }
+
+  logout() {
+    this.userService.logout();
+    this.router.navigate(['login']);
   }
 
   deleteTask(id:number) {

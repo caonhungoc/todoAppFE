@@ -41,6 +41,7 @@ export class LoginComponent implements OnInit {
       this.userService.userName = jsonRes.userName;
       localStorage.setItem('access_token', jsonRes.token);
       localStorage.setItem('userName', jsonRes.userName);
+      this.userService.isLogin = localStorage.getItem('userName');
       this.router.navigate(['todos']);
       // console.log("token = " + this.token + ", message = " + jsonRes.message);
     })

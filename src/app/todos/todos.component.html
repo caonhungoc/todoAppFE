@@ -1,4 +1,5 @@
 <p *ngIf="name">Hi {{ name }}</p>
+<button *ngIf="name" (click)="logout()">Logout</button>
 
 <!-- <input type="text" name="title" [(ngModel)]="title" placeholder="title"> -->
 
@@ -35,6 +36,13 @@
     </li>
 </ul> -->
 
+<div *ngIf="!tasks[0]">
+    <h1>task empty</h1>
+</div>
+<div *ngIf="tasks[0]">
+    <h1>Todos</h1>
+</div>
+
 
 <div *ngIf="tasks[0]">
     <div *ngFor="let task of tasks; let i = index">
@@ -59,10 +67,6 @@
             </div>
      
     </div>
-</div>
-
-<div *ngIf="!tasks[0]">
-    <h1>task empty</h1>
 </div>
 
 

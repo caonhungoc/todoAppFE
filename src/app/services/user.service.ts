@@ -20,6 +20,7 @@ export class UserService {
   private UrlTask = 'http://localhost:3333/api/task';
 
   token: String = '';
+  isLogin = localStorage.getItem('userName');
 
   httpOptions: any = 
   {
@@ -42,6 +43,10 @@ export class UserService {
       'Content-Type': 'application/json' }),
       withCredentials: true
     }).pipe().toPromise();
+  }
+
+  public logout() {
+    localStorage.removeItem('userName');
   }
 
   public getAllTask() {
