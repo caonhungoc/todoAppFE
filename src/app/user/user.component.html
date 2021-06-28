@@ -1,3 +1,5 @@
+<p *ngIf="name">Hi {{ name }}</p>
+<button *ngIf="name" (click)="logout()">Logout</button>
 <h1>User list</h1>
 <button (click)="getAllUser()">get all Users</button>
 <label for="cars">Choose a task type:</label>

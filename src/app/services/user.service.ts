@@ -30,7 +30,7 @@ export class UserService {
     withCredentials: true
   };
 
-  public createUSer(user: any): Promise<any> {
+  public createUser(user: any): Promise<any> {
     return this.http.post(this.Url, user).pipe().toPromise();
   }
 
@@ -47,6 +47,8 @@ export class UserService {
 
   public logout() {
     localStorage.removeItem('userName');
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('role');
   }
 
   public getAllTask() {

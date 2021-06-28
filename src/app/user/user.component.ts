@@ -14,6 +14,7 @@ export class UserComponent implements OnInit {
   users: User[] = [];
   tasks: Task[] = [];
   selectedOption: any = '';
+  name: any = '';
   
   constructor(private userService: UserService, private router: Router) { 
     if(!this.userService.isLogin) {
@@ -32,6 +33,11 @@ export class UserComponent implements OnInit {
     })
   }
 
+  logout() {
+    this.userService.logout();
+    this.router.navigate(['login']);
+  }
+
   getTaskByType() {
     this.userService.getTaskByType(this.selectedOption)
     .then(tasks => {
@@ -42,16 +48,18 @@ export class UserComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if(this.userService.isLogin) {
+    if(this.userService.isLogin && localStorage.getItem('role') === 'admin') {
       this.userService.getUsers()
       .then(users => {
         this.users = users;
+        this.name = localStorage.getItem('userName');
       })
       .catch(e => {
         console.log("error = " + JSON.stringify(e));
       })
     }
     else {
+      alert('no permission');
       this.router.navigate(['login']);
     }
   }

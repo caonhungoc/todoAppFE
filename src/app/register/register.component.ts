@@ -19,8 +19,11 @@ export class RegisterComponent implements OnInit {
     password : '',
     rePassword : '',
   }
+  x: Array<string> = new Array<string>();////
 
   error = '';
+
+  date = new Date();
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -42,7 +45,7 @@ export class RegisterComponent implements OnInit {
       return;
     }
     this.error = '';
-    this.userService.createUSer(userInfor)
+    this.userService.createUser(userInfor)
     .then(data => {
       // this.data.email;
       // this.error = data.toString();

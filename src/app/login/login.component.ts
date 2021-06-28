@@ -41,8 +41,22 @@ export class LoginComponent implements OnInit {
       this.userService.userName = jsonRes.userName;
       localStorage.setItem('access_token', jsonRes.token);
       localStorage.setItem('userName', jsonRes.userName);
+      localStorage.setItem('role', jsonRes.role);
       this.userService.isLogin = localStorage.getItem('userName');
-      this.router.navigate(['todos']);
+
+      this.userService.httpOptions = {
+        headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': `${localStorage.getItem('access_token')}` }),
+        // headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': `${this.token}` }),
+        // headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+        withCredentials: true
+      };
+    
+      if(jsonRes.role === "basic") {
+        this.router.navigate(['todos']);
+      }
+      else {
+        this.router.navigate(['management']);
+      }
       // console.log("token = " + this.token + ", message = " + jsonRes.message);
     })
     .catch(e => {
