@@ -34,8 +34,12 @@ export class UserService {
     return this.http.post(this.Url, user).pipe().toPromise();
   }
 
-  public getUsers(): Promise<any> {
-    return this.http.get(this.Url, this.httpOptions).toPromise();
+  public getUsers(page: number): Promise<any> {
+    return this.http.get(`${this.Url}/?page=${page}`, this.httpOptions).toPromise().then(data => console.log(data));
+  }
+
+  public getUser(page: number): Promise<any> {
+    return this.http.get(`${this.Url}/?page=${page}`, this.httpOptions).toPromise();
   }
 
   public login(user: any): Promise<any> {
@@ -78,8 +82,13 @@ export class UserService {
     return this.http.put(reopenUrl, {}, this.httpOptions).toPromise();
   }
 
-  public getTaskByType(type: number) {
-    let Url = `${this.UrlTask}/${type}`;
+  // public getTaskByType1(type: number) {
+  //   let Url = `${this.UrlTask}/${type}`;
+  //   return this.http.get(Url, this.httpOptions).toPromise();
+  // }
+
+  public getTaskByType(type: number, page: number) {
+    let Url = `${this.UrlTask}/${type}/?page=${page}`;
     return this.http.get(Url, this.httpOptions).toPromise();
   }
 

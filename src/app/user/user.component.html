@@ -1,8 +1,8 @@
 <p *ngIf="name">Hi {{ name }}</p>
 <button *ngIf="name" (click)="logout()">Logout</button>
 <h1>User list</h1>
-<button (click)="getAllUser()">get all Users</button>
-<label for="cars">Choose a task type:</label>
+<button (click)="getAllUser(1)">get all Users</button>
+<label for="task">Choose a task type:</label>
 
 <select (change)="getTaskByType()" [(ngModel)]="selectedOption">
   <option value="1" selected>opened task</option>
@@ -11,21 +11,39 @@
   <option value="4">removed task</option>
 </select>
 
-<ul *ngIf="users[0]">
-    <li *ngFor="let user of users">
-        <span> id : {{ user.id }}</span>
-        <span> | user name : {{ user.name }}</span>
-        <span> | email : {{ user.email }}</span>
-    </li>
-</ul>
+<div class="list" *ngIf="users[0]">
+    <ul >
+        <li *ngFor="let user of users | paginate: { itemsPerPage: 10, currentPage: pUser, totalItems: countedUser }">
+            <span> id : {{ user.id }}</span>
+            <span> | user name : {{ user.name }}</span>
+            <span> | email : {{ user.email }}</span>
+        </li>
+    </ul>
 
-<ul *ngIf="tasks[0]">
+    <pagination-controls (pageChange)="handlePageChangeUser($event)"></pagination-controls>
+</div>
+
+<!-- <div class="list" *ngIf="tasks[0]"> -->
+<div class="list" *ngIf="tasks.length">
+    <ul >
+        <li *ngFor="let item of tasks | paginate: { itemsPerPage: 10, currentPage: pTask, totalItems: countedTask }">
+            <span> ID : {{ item.id }}</span>
+            <span> | Ttile : {{ item.title }}</span>
+            <span> | Description : {{ item.description }}</span>
+            <span> | User Id : {{ item.userID }}</span>
+        </li>
+    </ul>
+
+    <pagination-controls (pageChange)="handlePageChangeTask($event)"></pagination-controls>
+</div>
+
+<!-- <ul *ngIf="tasks[0]">
     <li *ngFor="let task of tasks">
         <span> id : {{ task.id }}</span>
         <span> | title : {{ task.title }}</span>
         <span> | description : {{ task.description }}</span>
         <span> | user id : {{ task.userID }}</span>
     </li>
-</ul>
+</ul> -->
 
 

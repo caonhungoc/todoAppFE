@@ -19,7 +19,6 @@ export class RegisterComponent implements OnInit {
     password : '',
     rePassword : '',
   }
-  x: Array<string> = new Array<string>();////
 
   error = '';
 
